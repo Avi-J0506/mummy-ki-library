@@ -10,7 +10,7 @@ router.post('/', async(req,res)=>{
         if(
             !req.body.title || !req.body.author || !req.body.pages
         ){
-            return res.status(404).send({
+            return res.status(400).send({
                 message : 'Teeno field bharo mummy: Bookname, Author aur Total Pages',
             })
         }
@@ -20,9 +20,9 @@ router.post('/', async(req,res)=>{
             pages: req.body.pages
         };
         const book = await Book.create(newBook);
-        res.status(200).send(book);
+        res.status(201).send(book);
     } catch(error) {
-        console.log(error);
+        console.log(error.message);
         res.status(500).send({message: error.message})
     }
 })
