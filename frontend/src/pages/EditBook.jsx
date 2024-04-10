@@ -16,7 +16,7 @@ const EditBook = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:5555/books/${id}`)
+    axios.get(`https://mummy-ki-library-backend.vercel.app/books/${id}`)
     .then((response) => {
         setAuthor(response.data.author);
         setPages(response.data.pages);
@@ -38,7 +38,7 @@ const EditBook = () => {
     
     setLoading(true);
     axios
-      .put(`http://localhost:5555/books/${id}`, data)
+      .put(`https://mummy-ki-library-backend.vercel.app/books/${id}`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar('Book Edited successfully', { variant: 'success' });
