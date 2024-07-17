@@ -1,39 +1,39 @@
 import express from 'express';
-import { Book } from '../models/bookModel.js';
+import { Truck } from '../models/truckModel.js';
 
 const router = express.Router();
 
 
-//Adding a new book
+//Adding a new truck
 router.post('/', async(req,res)=>{
     try{
         if(
-            !req.body.title || !req.body.author || !req.body.pages
+            !req.body.trucknum || !req.body.load || !req.body.status
         ){
             return res.status(400).send({
-                message : 'Teeno field bharo mummy: Bookname, Author aur Total Pages',
+                message : 'Fill all the required fields',
             })
         }
         const newBook = {
-            title: req.body.title,
-            author: req.body.author,
-            pages: req.body.pages
+            trucknum: req.body.trucknum,
+            load: req.body.load,
+            status: req.body.status
         };
-        const book = await Book.create(newBook);
-        res.status(201).send(book);
+        const truck = await Truck.create(newTruck);
+        res.status(201).send(truck);
     } catch(error) {
         console.log(error.message);
         res.status(500).send({message: error.message})
     }
 })
 
-//Route to get all books from database
+//Route to get all trucks from database
 router.get('/', async(req,res)=>{
     try {
-        const books = await Book.find({});
+        const trucks = await Truck.find({});
         return res.status(200).json({
-            count: books.length,
-            data: books
+            count: trucks.length,
+            data: trucks
         });
     } catch (error) {
         console.log(error.message);
@@ -41,57 +41,57 @@ router.get('/', async(req,res)=>{
     }
 })
 
-//Route to get one book from database by id
+//Route to get one truck from database by id
 router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const book = await Book.findById(id);
+        const truck = await Truck.findById(id);
 
-        if (!book) {
-            return res.status(404).json({ message: "Book not found" });
+        if (!truck) {
+            return res.status(404).json({ message: "Truck not found" });
         }
 
-        return res.status(200).json(book);
+        return res.status(200).json(truck);
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: "Server error" });
     }
 });
 
-//Updating the book
+//Updating the truck
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!req.body.title || !req.body.author || !req.body.pages) {
+        if (!req.body.trucknum || !req.body.load || !req.body.status) {
             return res.status(400).json({
                 message: "Send all required fields"
             });
         }
 
-        const result = await Book.findByIdAndUpdate(id, req.body);
+        const result = await Truck.findByIdAndUpdate(id, req.body);
 
         if (!result) {
-            return res.status(404).json({ message: "Book not found" });
+            return res.status(404).json({ message: "Truck not found" });
         }
 
-        return res.status(200).json({ message: "Book updated" });
+        return res.status(200).json({ message: "Truck updated" });
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({ message: "Book not found" });
+        return res.status(500).json({ message: "Truck not found" });
     }
 });
 
-//Deleting a book
+//Deleting a truck
 router.delete('/:id', async(req,res) =>{
     try {
         const { id } = req.params;
-        const result = await Book.findByIdAndDelete(id);
+        const result = await Truck.findByIdAndDelete(id);
 
         if(!result){
-            return res.status(404).json({message: 'Book not found'});
+            return res.status(404).json({message: 'Truck not found'});
         }
-        return res.status(200).send({message: 'Book successfully deleted'});
+        return res.status(200).send({message: 'Truck successfully deleted'});
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({ message: error.message });
