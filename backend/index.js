@@ -1,7 +1,7 @@
 import express, { response } from "express";
 import { PORT, mongoDB_URL } from "./config.js";
 import mongoose from "mongoose";
-import trucksRoute from "./routes/trucksRoute.js";
+import booksRoute from "./routes/booksRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -21,11 +21,11 @@ app.use(cors());
 
 app.get("/", (req, res) => {
   console.log(req);
-  return res.status(200).send("Truck Details");
+  return res.status(200).send("Mummy ki library");
 });
 
 //Using booksRoute
-app.use("/trucks", trucksRoute);
+app.use("/books", booksRoute);
 
 //MongoDB connection
 mongoose
